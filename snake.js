@@ -32,3 +32,6 @@ let food = {
     y = Math.floor(Math.random()*15+3)*box
 }
 
+// create score vairable
+
+let score = 0;
