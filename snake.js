@@ -6,7 +6,6 @@ const ctx = cvs.getContext("2d"); //ctx is context
 
 const box = 32; 
 
-
 //load images
 
 const ground = new Image(); //ground is an object of Image() class
@@ -35,3 +34,22 @@ let food = {
 // create score vairable
 
 let score = 0;
+
+// function to draw everything to the canvas
+
+function draw(){
+    ctx.drawImage(ground,0,0);
+
+    //loop to draw the complete snake
+    for(let i = 0; i < snake.length; i++){
+        ctx.fillStyle = (i==0) ? "green" : "white";
+        ctx.fillRect(snake[i].x,snake[i].y,box,box);
+
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(snake[i].x,snake[i].y,box,box);
+    }
+}
+
+//call the draw function every 100ms
+
+let game = setInterval(draw,100);
