@@ -14,3 +14,13 @@ ground.src = "img/ground.png";
 
 const foodImage = new Image(); //foodImage is an object of Image() class
 foodImage.src = "img/food.png";
+
+//create the snake
+
+let snake =[];
+snake[0] = {
+    x : 9*box,
+    y : 10*box
+}
+
+//
