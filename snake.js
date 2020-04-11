@@ -37,7 +37,22 @@ let score = 0;
 
 //control the snake
 
+let d; 
 
+document.addEventListener("keydown",direction);
+
+fucntion direction (event)
+{
+    if(event.keyCode==37){
+        d = "LEFT";
+    }else if(event.keyCode==38){
+        d = "UP";
+    }else if(event.keyCode==39){
+        d = "RIGHT";
+    }else if(event.keyCode==40){
+        d = "DOWN";
+    }
+}
 
 // function to draw everything to the canvas
 
@@ -55,6 +70,21 @@ function draw(){
 
     ctx.drawImage(foodImage, food.x, food.y);   //food variable declared already in line 29
 
+    //old head position
+
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    //remove tail
+
+    snake.pop();
+
+    //which direction
+
+    if(d = "LEFT") snakeX -= box;
+    if(d = "UP") snakeY -= box;
+    if(d = "RIGHT") snakeX += box;
+    if(d = "DOWN") snakeY += box;
     ctx.fillStyle = "white";
     ctx.font = "45 px Changa One";     //Changa One is font style
     ctx.fillText(score,2*box,1.6*box);
@@ -63,4 +93,3 @@ function draw(){
 //call the draw function every 100ms
 
 let game = setInterval(draw,100);
-
