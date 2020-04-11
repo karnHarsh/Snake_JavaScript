@@ -48,8 +48,11 @@ function draw(){
         ctx.strokeStyle = "red";
         ctx.strokeRect(snake[i].x,snake[i].y,box,box);
     }
+
+    ctx.drawImage(foodImage, food.x, food.y);   //food variable declared already in line 29
 }
 
 //call the draw function every 100ms
 
 let game = setInterval(draw,100);
+
