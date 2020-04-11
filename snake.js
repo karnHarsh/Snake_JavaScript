@@ -35,22 +35,42 @@ let food = {
 
 let score = 0;
 
+//load audio files
+
+const dead = new Audio();
+const eat = new Audio();
+const up = new Audio();
+const down = new Audio();
+const left = new Audio();
+const right = new Audio();
+
+dead.src = "audio/dead.mp3";
+eat.src = "audio/eat.mp3";
+up.src = "audio/up.mp3";
+down.src = "audio/down.mp3";
+left.src = "audio/left.mp3";
+right.src = "audio/right.mp3";
+
 //control the snake
 
 let d; 
 
 document.addEventListener("keydown",direction);
 
-fucntion direction (event)
+function direction (event)
 {
-    if(event.keyCode==37){
+    if(event.keyCode==37 && d!= "RIGHT"){
         d = "LEFT";
-    }else if(event.keyCode==38){
+        left.play();
+    }else if(event.keyCode==38 && d!= "DOWN"){
         d = "UP";
-    }else if(event.keyCode==39){
+        down.play();
+    }else if(event.keyCode==39 && d!= "LEFT"){
         d = "RIGHT";
-    }else if(event.keyCode==40){
+        right.play();
+    }else if(event.keyCode==40 && d!= "UP"){
         d = "DOWN";
+        down.play();
     }
 }
 
@@ -75,21 +95,59 @@ function draw(){
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
 
-    //remove tail
-
-    snake.pop();
+    
 
     //which direction
 
-    if(d = "LEFT") snakeX -= box;
-    if(d = "UP") snakeY -= box;
-    if(d = "RIGHT") snakeX += box;
-    if(d = "DOWN") snakeY += box;
+    if(d == "LEFT") snakeX -= box;
+    if(d == "UP") snakeY -= box;
+    if(d == "RIGHT") snakeX += box;
+    if(d == "DOWN") snakeY += box;
+
+    //if snake eats food
+    if(snakeX==food.x && snakeY==food.y){
+        score++;
+        food = {
+            x : Math.floor(Math.random()*17+1)*box,        //Math.random() function is used to create random positions of food
+            y : Math.floor(Math.random()*15+3)*box
+        }
+        eat.play();
+        //we don't remove the tail
+    }else{
+        //remove tail
+
+        snake.pop();
+    }
+
+    //add new head
+    let newHead = {
+        x : snakeX,
+        y : snakeY
+    }
+
+    //create a new function collision
+
+    function collision(head,array){
+        for(let i = 0; i < array.length ; i++){
+            if(head.x == array[i].x && head.y == array[i].y){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //game over rules
+    if(snakeX < box || snakeX > 17*box || snakeY < 3*box ||snakeY > 17*box||collision(newHead,snake)){
+        clearInterval(game);
+        dead.play();
+    }
+
+    snake.unshift(newHead);
     ctx.fillStyle = "white";
-    ctx.font = "45 px Changa One";     //Changa One is font style
+    ctx.font = "45 px Changa One";     //Changa One is font style //this line not working
     ctx.fillText(score,2*box,1.6*box);
 }
 
-//call the draw function every 100ms
+//call the draw function every 150ms
 
-let game = setInterval(draw,100);
+let game = setInterval(draw,150);
