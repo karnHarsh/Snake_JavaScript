@@ -35,6 +35,10 @@ let food = {
 
 let score = 0;
 
+//control the snake
+
+
+
 // function to draw everything to the canvas
 
 function draw(){
@@ -50,6 +54,10 @@ function draw(){
     }
 
     ctx.drawImage(foodImage, food.x, food.y);   //food variable declared already in line 29
+
+    ctx.fillStyle = "white";
+    ctx.font = "45 px Changa One";     //Changa One is font style
+    ctx.fillText(score,2*box,1.6*box);
 }
 
 //call the draw function every 100ms
